@@ -10,13 +10,30 @@
 
 @interface HYContentViewController ()
 
+@property (nonatomic, strong) UILabel *label;
+
 @end
 
 @implementation HYContentViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.userInteractionEnabled = YES;
+    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnBackgroundView:)];
+    [self.view addGestureRecognizer:recognizer];
+        
+    _label = [[UILabel alloc] init];
+    _label.font = [UIFont boldSystemFontOfSize:36.f];
+    _label.textColor = [UIColor blackColor];
+    _label.textAlignment = NSTextAlignmentCenter;
+    _label.text = @"Hello World!";
+    _label.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:self.label];
+
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.label attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[label]|" options:kNilOptions metrics:0 views:@{@"label":self.label}]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.label attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:40]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -24,14 +41,13 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)tappedOnBackgroundView:(UITapGestureRecognizer *)recognizer
+{
+    if (self.delegate && [self.delegate conformsToProtocol:@protocol(HYContentViewControllerDelegate)]) {
+        if ([self.delegate respondsToSelector:@selector(tappedBackgroundViewHandler:)]) {
+            [self.delegate tappedBackgroundViewHandler:self];
+        }
+    }
 }
-*/
 
 @end

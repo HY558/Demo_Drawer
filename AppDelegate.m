@@ -18,12 +18,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-    if (_window) {
+    if (!_window) {
         _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     }
     
     HYContainerViewController *containerVC = [[HYContainerViewController alloc] init];
-    self.window.rootViewController = containerVC;
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:containerVC];
+    self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
     
     return YES;

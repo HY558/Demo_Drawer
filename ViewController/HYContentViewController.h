@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class HYContentViewController;
+@protocol HYContentViewControllerDelegate <NSObject>
+
+@optional
+- (void)tappedBackgroundViewHandler:(HYContentViewController *)viewController;
+
+@end
+
 @interface HYContentViewController : UIViewController
+
+@property (nonatomic, weak) id<HYContentViewControllerDelegate> delegate;
 
 @end
