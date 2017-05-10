@@ -12,7 +12,7 @@
 @protocol HYContentViewControllerDelegate <NSObject>
 
 @optional
-- (void)tappedBackgroundViewHandler:(HYContentViewController *)viewController;
+- (void)contentViewController:(HYContentViewController *)viewController receiveGestureRecognizer:(UIGestureRecognizer *)recognizer;
 
 @end
 

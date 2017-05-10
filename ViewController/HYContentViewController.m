@@ -20,8 +20,12 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.view.userInteractionEnabled = YES;
-    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnBackgroundView:)];
-    [self.view addGestureRecognizer:recognizer];
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureRecognizerHandler:)];
+    [self.view addGestureRecognizer:tapRecognizer];
+    
+    UIScreenEdgePanGestureRecognizer *edgePanRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(gestureRecognizerHandler:)];
+    edgePanRecognizer.edges = UIRectEdgeLeft;
+    [self.view addGestureRecognizer:edgePanRecognizer];
         
     _label = [[UILabel alloc] init];
     _label.font = [UIFont boldSystemFontOfSize:36.f];
@@ -41,11 +45,11 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)tappedOnBackgroundView:(UITapGestureRecognizer *)recognizer
+- (void)gestureRecognizerHandler:(UIGestureRecognizer *)recognizer
 {
     if (self.delegate && [self.delegate conformsToProtocol:@protocol(HYContentViewControllerDelegate)]) {
-        if ([self.delegate respondsToSelector:@selector(tappedBackgroundViewHandler:)]) {
-            [self.delegate tappedBackgroundViewHandler:self];
+        if ([self.delegate respondsToSelector:@selector(contentViewController:receiveGestureRecognizer:)]) {
+            [self.delegate contentViewController:self receiveGestureRecognizer:recognizer];
         }
     }
 }

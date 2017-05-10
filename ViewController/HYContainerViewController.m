@@ -100,10 +100,19 @@
 }
 
 #pragma mark - HYContentViewControllerDelegate
-- (void)tappedBackgroundViewHandler:(HYContentViewController *)viewController
+- (void)contentViewController:(HYContentViewController *)viewController receiveGestureRecognizer:(UIGestureRecognizer *)recognizer
 {
-    if (_menuListOpened) {
-        [self clickedLeftButtonItem];
+    if ([recognizer isMemberOfClass:[UITapGestureRecognizer class]]) {
+        if (_menuListOpened) {
+            [self clickedLeftButtonItem];
+        }
+        return;
+    }
+
+    if ([recognizer isMemberOfClass:[UIScreenEdgePanGestureRecognizer class]]) {
+        if (!_menuListOpened) {
+            [self clickedLeftButtonItem];
+        }
     }
 }
 
